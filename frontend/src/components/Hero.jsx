@@ -1,6 +1,7 @@
 import React from "react";
 import profilePic from "../assets/prof.jpg";
 import { TypeAnimation } from "react-type-animation";
+import ShinnyEffect from "./ShinnyEffect";
 const Hero = () => {
   return (
     <div className="grid md:grid-cols-2 place-items-center max-w-[1250px] mx-auto  mb-8 md:mb-32 mt-14">

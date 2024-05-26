@@ -12,7 +12,7 @@ const Navbar = () => {
   return (
     <div className="text-gray-200 flex justify-between text-2xl items-center px-6 h-24 max-w-[1300px] mx-auto">
       <a href="">Muhammad Huzaifa</a>
-      <ul className=" md:flex  gap-12 z-10 cursor-pointer">
+      <ul className=" md:flex gap-12 z-10 cursor-pointer">
         <li className="relative group">
           <Link to="about" smooth={true} offset={50} duration={500}>
             About
