@@ -21,7 +21,7 @@ const Contact = () => {
           <AiFillGithub className="w-[70px] h-auto text-gray-300" />
           <div className="m-5">
             <h3 className="text-lg font-bold text-gray-200">Working Hours</h3>
-            <p className="text-[16px] text-gray-200">Mon-Fri: 10am-5pm</p>
+            <p className="text-[16px] text-gray-200">Mon-Sat: 10am-5pm</p>
           </div>
         </li>
       </ul>
