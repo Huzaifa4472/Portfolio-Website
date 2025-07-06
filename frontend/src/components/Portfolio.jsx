@@ -1,7 +1,12 @@
 import React, { useState } from "react";
-import projectThree from "../assets/projects/port-project.png";
+import projectThree from "../assets/projects/ray-cast.png";
 import projectOne from "../assets/projects/NFT-project.png";
 import projectTwo from "../assets/projects/AdminPanel-project.png";
+import projectFour from "../assets/projects/core-peptide.png";
+import projectFive from "../assets/projects/shopp.png";
+import projectSix from "../assets/projects/tht-car.png";
+import projectSeven from "../assets/projects/business-creditcard.png";
+
 import {
   DiJavascript1,
   DiReact,
@@ -17,20 +22,72 @@ const projects = [
   {
     img: projectOne,
     title: "NFT Marketplace",
-    description: "Hello",
-    links: { site: "#", github: "#" },
+    description:
+      "I developed a decentralized NFT marketplace that empowers artists and collectors to create, buy, and sell unique digital assets. Key features include a user-friendly interface for minting NFTs, secure wallet integration, and a vibrant community-driven auction system.",
+    links: {
+      site: "https://nf-twebsite-uh4q.vercel.app/",
+      github: "http://github.com/Huzaifa4472/NFTwebsite",
+    },
+  },
+  {
+    img: projectFour,
+    title: "Core Peptides",
+    description:
+      "A visually engaging website for a peptide product brand. Highlights product categories and key benefits with a focus on clean design, clear messaging, and user-friendly navigation to inform and attract potential customers.",
+    links: {
+      site: "https://core-peptides.vercel.app/",
+      github: "#",
+    },
   },
   {
     img: projectTwo,
     title: "Admin-Dashboard",
-    description: "Hello",
-    links: { site: "#", github: "#" },
+    description:
+      "A web dashboard featuring data cards, charts, and quick-access panels. Designed to present key metrics and insights clearly, with an emphasis on usability and clean visual structure for efficient data monitoring.",
+    links: {
+      site: "https://dashboard-rho-azure.vercel.app/",
+      github: "http://github.com/Huzaifa4472/Dashboard",
+    },
   },
   {
     img: projectThree,
-    title: "Portfolio-Website",
-    description: "Hello",
-    links: { site: "#", github: "#" },
+    title: "Ray-Cast",
+    description:
+      "A web interface inspired by Raycast, presenting tools and shortcuts in a clean, minimalist layout. Built to demonstrate efficient UI design, intuitive navigation, and streamlined user workflows.",
+    links: {
+      site: "https://raycast-6lk2.vercel.app/",
+      github: "https://github.com/Huzaifa4472/raycast",
+    },
+  },
+  {
+    img: projectFive,
+    title: "USA-Imported Goodies | Admin Dashboard",
+    description:
+      "A responsive e-commerce landing page highlighting featured products and promotions. Designed with a focus on clarity and user-friendly navigation to encourage browsing and increase conversions.",
+    links: {
+      site: "https://shopp-website.vercel.app/",
+      github: "http://github.com/Huzaifa4472/Shopp-Website",
+    },
+  },
+  {
+    img: projectSix,
+    title: "THT-Cars",
+    description:
+      "A sleek, responsive landing page for THT Cars — one of the top two car rental companies in the US. Showcases premium vehicles and exclusive services through a clean hero section and clear calls to action, crafted to boost user engagement and drive bookings.",
+    links: {
+      site: "https://thtcars.vercel.app/",
+      github: "https://github.com/Huzaifa4472/thtcars",
+    },
+  },
+  {
+    img: projectSeven,
+    title: "Business CreditCard",
+    description:
+      "A modern, responsive React and Tailwind CSS web application designed to promote a business credit card. It features a clean hero section, highlights key product benefits, and guides users toward applying — with a focus on clarity, usability, and conversion.",
+    links: {
+      site: "https://business-creditcard.vercel.app/",
+      github: "https://github.com/Huzaifa4472/business-creditcard",
+    },
   },
 ];
 const Portfolio = () => {

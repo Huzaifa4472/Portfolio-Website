@@ -1,6 +1,31 @@
-import React from "react";
+import React, { useRef } from "react";
 import { AiFillLinkedin, AiFillGithub } from "react-icons/ai";
+import emailjs from "@emailjs/browser";
+
 const Contact = () => {
+  const form = useRef();
+  const sendEmail = (e) => {
+    e.preventDefault();
+
+    emailjs
+      .sendForm(
+        "service_o1c09e7", // replace with your EmailJS service ID
+        "template_a5awx4e", // replace with your EmailJS template ID
+        form.current,
+        "FvE3Rz2WNwObp9zpN" // replace with your EmailJS public key
+      )
+      .then(
+        (result) => {
+          console.log(result.text);
+          alert("Message sent successfully!");
+          e.target.reset(); // clear form
+        },
+        (error) => {
+          console.log(error.text);
+          alert("An error occurred, please try again.");
+        }
+      );
+  };
   return (
     <div
       className="px-6 max-w-[1000px] mx-auto glass grid md:grid-cols-2 place-items-center"
@@ -26,11 +51,17 @@ const Contact = () => {
         </li>
       </ul>
 
-      <form method="POST" action="" className="max-w-6xl p-5 md:p-12" id="form">
+      <form
+        ref={form}
+        onSubmit={sendEmail}
+        className="max-w-6xl p-5 md:p-12"
+        id="form"
+      >
         <input
           type="text"
           id="name"
           name="name"
+          required
           placeholder="Your Name ..."
           className="mb-2 w-full rounded-md border border-gray-400 py-2 pl-2 pr-4"
         />
@@ -38,6 +69,7 @@ const Contact = () => {
           type="email"
           id="email"
           name="email"
+          required
           placeholder="Your Email ..."
           className="mb-2 w-full rounded-md border border-gray-400 py-2 pl-2 pr-4"
         />{" "}
@@ -46,6 +78,7 @@ const Contact = () => {
           name="textarea"
           cols={30}
           rows={4}
+          required
           placeholder="Your Message ..."
           className="mb-2 w-full rounded-md border border-gray-400 py-2 pl-2 pr-4"
         ></textarea>

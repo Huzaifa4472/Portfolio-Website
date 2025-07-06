@@ -1,5 +1,5 @@
 import React from "react";
-import projectThree from "../assets/projects/port-project.png";
+import projectThree from "../assets/projects/ray-cast.png";
 import projectOne from "../assets/projects/NFT-project.png";
 import projectTwo from "../assets/projects/AdminPanel-project.png";
 import { SiStyledcomponents } from "react-icons/si";
