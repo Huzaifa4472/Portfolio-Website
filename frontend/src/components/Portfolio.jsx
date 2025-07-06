@@ -22,13 +22,13 @@ const projects = [
   },
   {
     img: projectTwo,
-    title: "NFT Marketplace",
+    title: "Admin-Dashboard",
     description: "Hello",
     links: { site: "#", github: "#" },
   },
   {
     img: projectThree,
-    title: "NFT Marketplace",
+    title: "Portfolio-Website",
     description: "Hello",
     links: { site: "#", github: "#" },
   },

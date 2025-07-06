@@ -3,6 +3,13 @@ import profilePic from "../assets/prof.jpg";
 import { TypeAnimation } from "react-type-animation";
 import ShinnyEffect from "./ShinnyEffect";
 const Hero = () => {
+  const handleDownload = () => {
+    const link = document.createElement("a");
+    link.href =
+      "https://training.epam.am/static/news/255/self-study_03375353.png";
+    link.download = "self-study_03375353.png";
+    link.click();
+  };
   return (
     <div className="grid md:grid-cols-2 place-items-center max-w-[1250px] mx-auto  mb-8 md:mb-32 mt-14">
       <div className="max-w-[800px]">
@@ -19,7 +26,12 @@ const Hero = () => {
         </p>
         <h2 className="text-gray-300">with 1+ year of experience</h2>
         <div className=" flex flex-row gap-4 mb-4 md:mb-0">
-          <button className="transform transition-transform hover:scale-105 hover:shadow-lg z-10 cursor-pointer font-bold text-gray-200 w-1/2 mt-6 p-2 bg-gradient-to-r from-[#50a7c7] via-[#1f7c8f] to-[#3d6ca4] rounded-xl">
+          <button
+            onClick={handleDownload}
+            className="transform transition-transform hover:scale-105 hover:shadow-lg z-10 cursor-pointer font-bold text-gray-200 w-1/2 mt-6 p-2 bg-gradient-to-r from-[#50a7c7] via-[#1f7c8f] to-[#3d6ca4] rounded-xl"
+            href="https://training.epam.am/static/news/255/self-study_03375353.png"
+            download
+          >
             Downlooad Cv
           </button>
           <button className="transform transition-transform hover:scale-105 hover:shadow-lg z-10 cursor-pointer font-bold text-gray-200 w-1/2 mt-6 p-2 border border-gray-400 rounded-xl">
