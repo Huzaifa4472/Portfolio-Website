@@ -1,38 +1,88 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Noto+Sans:ital@0;1&family=Space+Grotesk:wght@300..700&display=swap");
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-body {
-  font-family: "Space Grotesk", sans-serif;
-  background: linear-gradient(135deg, #282727, #201e1e);
-  background-size: cover;
-  background-repeat: none;
-}
-h2 {
-  @apply text-xl md:text-3xl;
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply text-slate-200 font-sans antialiased;
+    background-color: #05060a;
+    background-image: linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+      linear-gradient(to right, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+    background-size: 64px 64px;
+    background-attachment: fixed;
+    background-repeat: repeat;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-display;
+  }
+
+  h2 {
+    @apply text-2xl md:text-4xl font-bold tracking-tight;
+  }
+
+  p {
+    @apply text-base md:text-lg tracking-tight leading-relaxed text-slate-400;
+  }
+
+  ::selection {
+    background: rgba(34, 211, 238, 0.35);
+    color: #fff;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #05060a;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #22d3ee, #8b5cf6);
+    border-radius: 999px;
+    border: 2px solid #05060a;
+  }
 }
 
-p {
-  @apply text-xl tracking-tight leading-relaxed;
-}
-.glass {
-  background: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0.1),
-    rgba(255, 255, 255, 0)
-  );
-  backdrop-filter: blur(10px);
-  border-radius: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-}
+@layer components {
+  .section-container {
+    @apply max-w-[1200px] mx-auto px-6 md:px-10;
+  }
 
-.shiny-effect {
-  position: absolute;
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 1;
-  background: radial-gradient(circle, rgba(70, 161, 181, 0.2), transparent 70%);
+  .eyebrow {
+    @apply inline-flex items-center gap-2 text-xs md:text-sm font-mono tracking-widest uppercase text-brand-cyan/80;
+  }
+
+  .accent-text {
+    @apply text-brand-cyan;
+  }
+
+  .btn-primary {
+    @apply relative inline-flex items-center justify-center gap-2 rounded-xl px-6 py-3 font-semibold text-ink-950 bg-brand-cyan transition-all duration-300 hover:brightness-110 hover:-translate-y-0.5;
+  }
+
+  .btn-outline {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl px-6 py-3 font-semibold text-slate-200 border border-white/15 bg-white/[0.02] transition-all duration-300 hover:border-brand-cyan/40 hover:text-white hover:-translate-y-0.5;
+  }
+
+  .tile-card {
+    @apply bg-white/[0.03] border border-white/10 rounded-2xl;
+  }
+
+  .card-hover {
+    @apply transition-all duration-500 hover:-translate-y-1.5;
+  }
+
+  .dot-grid {
+    background-image: radial-gradient(rgba(255, 255, 255, 0.14) 1px, transparent 1px);
+    background-size: 22px 22px;
+  }
 }
