@@ -1,23 +1,24 @@
-import React from "react";
-import { motion } from "framer-motion";
-import projectThree from "../assets/projects/ray-cast.jpg";
-import projectOne from "../assets/projects/NFT-project.jpg";
-import projectTwo from "../assets/projects/AdminPanel-project.jpg";
-import projectFour from "../assets/projects/core-peptide.jpg";
-import projectFive from "../assets/projects/shopp.jpg";
-import projectSix from "../assets/projects/tht-car.jpg";
-import projectSeven from "../assets/projects/business-creditcard.jpg";
-import canopyImg from "../assets/projects/canopy-intel.jpg";
-import usaPeptidesImg from "../assets/projects/usa-peptides.jpg";
-import dadiRentBoatImg from "../assets/projects/dadi-rent-boat.jpg";
-import uqgLmsImg from "../assets/projects/uqg-lms.jpg";
-import ePeopleImg from "../assets/projects/e-people.jpg";
-import data2uImg from "../assets/projects/data2u.jpg";
-import { DiGithubBadge } from "react-icons/di";
-import { FiArrowUpRight, FiExternalLink, FiLock } from "react-icons/fi";
+import React, { forwardRef, useMemo, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import projectThree from "../assets/projects/ray-cast.webp";
+import projectOne from "../assets/projects/NFT-project.webp";
+import projectTwo from "../assets/projects/AdminPanel-project.webp";
+import projectFive from "../assets/projects/shopp.webp";
+import projectSix from "../assets/projects/tht-car.webp";
+import projectSeven from "../assets/projects/business-creditcard.webp";
+import canopyImg from "../assets/projects/canopy-intel.webp";
+import usaPeptidesImg from "../assets/projects/usa-peptides.webp";
+import dadiRentBoatImg from "../assets/projects/dadi-rent-boat.webp";
+import uqgLmsImg from "../assets/projects/uqg-lms.webp";
+import ePeopleImg from "../assets/projects/e-people.webp";
+import data2uImg from "../assets/projects/data2u.webp";
+import { AiFillGithub } from "react-icons/ai";
+import { FiArrowUpRight, FiLock, FiChevronDown } from "react-icons/fi";
+import { SectionHeading } from "./ui";
 
 const projects = [
   {
+    category: "AI & Data",
     img: canopyImg,
     title: "Canopy Intel AI — Person Detection & Analytics",
     description:
@@ -27,6 +28,7 @@ const projects = [
     featured: true,
   },
   {
+    category: "Web Apps",
     img: projectOne,
     title: "NFT Marketplace",
     description:
@@ -38,6 +40,7 @@ const projects = [
     },
   },
   {
+    category: "E-Commerce",
     img: usaPeptidesImg,
     title: "USA Peptides Lab — E-Commerce Platform",
     description:
@@ -47,17 +50,7 @@ const projects = [
     private: true,
   },
   {
-    img: projectFour,
-    title: "Core Peptides",
-    description:
-      "A visually engaging marketing website for a peptide product brand. Highlights product categories and key benefits with clean design and user-friendly navigation.",
-    tags: ["React", "Tailwind CSS"],
-    links: {
-      site: "https://core-peptides.vercel.app/",
-      github: null,
-    },
-  },
-  {
+    category: "Web Apps",
     img: uqgLmsImg,
     title: "Learning Management System (LMS)",
     description:
@@ -66,6 +59,7 @@ const projects = [
     links: { site: "https://www.uqg.techletspk.com/", github: null },
   },
   {
+    category: "AI & Data",
     img: data2uImg,
     title: "Data2u — AI-Powered Data Enrichment",
     description:
@@ -75,6 +69,7 @@ const projects = [
     private: true,
   },
   {
+    category: "Web Apps",
     img: projectTwo,
     title: "Admin Dashboard",
     description:
@@ -86,6 +81,7 @@ const projects = [
     },
   },
   {
+    category: "Websites",
     img: projectThree,
     title: "Ray-Cast",
     description:
@@ -97,6 +93,7 @@ const projects = [
     },
   },
   {
+    category: "E-Commerce",
     img: projectFive,
     title: "USA-Imported Goodies",
     description:
@@ -108,6 +105,7 @@ const projects = [
     },
   },
   {
+    category: "Web Apps",
     img: projectSix,
     title: "THT Cars — Rental Frontend",
     description:
@@ -120,6 +118,7 @@ const projects = [
     featured: true,
   },
   {
+    category: "Web Apps",
     img: ePeopleImg,
     title: "e-People — HR & Performance Management",
     description:
@@ -130,6 +129,7 @@ const projects = [
     featured: true,
   },
   {
+    category: "Web Apps",
     img: dadiRentBoatImg,
     title: "Dadi Rent Boat",
     description:
@@ -139,6 +139,7 @@ const projects = [
     private: true,
   },
   {
+    category: "Websites",
     img: projectSeven,
     title: "Business Credit Card",
     description:
@@ -151,120 +152,237 @@ const projects = [
   },
 ];
 
-const cardVariants = {
-  hidden: { opacity: 0, y: 32 },
-  show: (i) => ({
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.55, delay: (i % 3) * 0.1, ease: "easeOut" },
-  }),
+// Featured projects first, original order otherwise.
+const ordered = [...projects].sort((a, b) => Number(!!b.featured) - Number(!!a.featured));
+
+const filters = ["All", "Web Apps", "AI & Data", "E-Commerce", "Websites"];
+// One wide case study + two full rows of three.
+const INITIAL_COUNT = 7;
+
+const hostOf = (url) => {
+  try {
+    return new URL(url).host.replace(/^www\./, "");
+  } catch {
+    return null;
+  }
 };
 
-const Portfolio = () => {
-  return (
-    <section id="portfolio" className="relative py-24 md:py-32 scroll-mt-24">
-      <div className="section-container">
-        <motion.div
-          initial={{ opacity: 0, y: 28 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.6 }}
-          className="flex items-start gap-4 max-w-2xl mb-16"
-        >
-          <span className="font-mono text-sm text-brand-cyan/40 pt-1 shrink-0">03</span>
-          <div>
-            <span className="eyebrow">Selected work</span>
-            <h2 className="mt-3 text-slate-100">
-              Featured <span className="accent-text">Projects</span>
-            </h2>
-            <p className="!text-base mt-4">
-              A collection of products I&apos;ve designed and built, from
-              client e-commerce platforms and AI tools to admin dashboards.
-            </p>
-          </div>
-        </motion.div>
+const BrowserFrame = ({ project, className = "" }) => (
+  <div
+    className={`relative overflow-hidden rounded-[1.1rem] border border-white/10 bg-ink-800 ${className}`}
+  >
+    <div className="flex items-center gap-3 px-3.5 h-8 border-b border-white/[0.07] bg-ink-900/90">
+      <div className="flex gap-1.5">
+        <span className="w-2.5 h-2.5 rounded-full bg-[#ff5f57]/80" />
+        <span className="w-2.5 h-2.5 rounded-full bg-[#febc2e]/80" />
+        <span className="w-2.5 h-2.5 rounded-full bg-[#28c840]/80" />
+      </div>
+      <div className="flex-1 flex justify-center">
+        <span className="inline-flex items-center gap-1.5 max-w-[70%] truncate rounded-md bg-white/[0.05] px-3 py-0.5 text-[10px] font-mono text-slate-500">
+          {project.private ? <FiLock size={9} /> : null}
+          {hostOf(project.links.site) ?? "private.client"}
+        </span>
+      </div>
+      <span className="w-[42px]" />
+    </div>
+    <div className="relative aspect-[16/10] overflow-hidden">
+      <img
+        src={project.img}
+        alt={project.title}
+        loading="lazy"
+        className="w-full h-full object-cover object-top transition-transform duration-[1.2s] ease-out group-hover:scale-[1.04]"
+      />
+      <div className="absolute inset-0 bg-gradient-to-t from-ink-950/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+    </div>
+  </div>
+);
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-6 gap-4 lg:gap-5">
-          {projects.map((project, i) => (
-            <motion.article
-              key={project.title}
-              custom={i}
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true, amount: 0.2 }}
-              variants={cardVariants}
-              className={`group relative tile-card overflow-hidden card-hover hover:border-brand-cyan/30 flex flex-col ${
-                project.featured ? "lg:col-span-4" : "lg:col-span-2"
+const ProjectLinks = ({ project }) =>
+  project.private ? (
+    <span className="inline-flex items-center gap-2 text-slate-500">
+      <FiLock size={13} /> Private client project
+    </span>
+  ) : (
+    <>
+      <a
+        href={project.links.site}
+        target="_blank"
+        rel="noreferrer"
+        className="inline-flex items-center gap-1.5 font-medium text-white hover:text-brand-cyan transition-colors"
+      >
+        Live site{" "}
+        <FiArrowUpRight className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+      </a>
+      {project.links.github && (
+        <a
+          href={project.links.github}
+          target="_blank"
+          rel="noreferrer"
+          className="inline-flex items-center gap-1.5 text-slate-400 hover:text-white transition-colors"
+        >
+          <AiFillGithub /> Code
+        </a>
+      )}
+    </>
+  );
+
+const Tags = ({ tags, max = tags.length }) => (
+  <div className="flex flex-wrap gap-1.5">
+    {tags.slice(0, max).map((tag) => (
+      <span key={tag} className="chip">
+        {tag}
+      </span>
+    ))}
+    {tags.length > max && <span className="chip">+{tags.length - max}</span>}
+  </div>
+);
+
+const cardMotion = {
+  layout: true,
+  initial: { opacity: 0, y: 24 },
+  animate: { opacity: 1, y: 0 },
+  exit: { opacity: 0, scale: 0.96 },
+  transition: { duration: 0.45, ease: [0.22, 1, 0.36, 1] },
+};
+
+const ProjectCard = forwardRef(function ProjectCard({ project, wide }, ref) {
+  if (wide) {
+    return (
+      <motion.article
+        ref={ref}
+        {...cardMotion}
+        className="group tile-card tile-card-hover spotlight p-2 sm:col-span-2 lg:col-span-3 grid lg:grid-cols-12 gap-2"
+      >
+        <BrowserFrame project={project} className="lg:col-span-7" />
+        <div className="lg:col-span-5 p-6 lg:p-8 flex flex-col">
+          <div className="flex items-center gap-2">
+            <span className="chip !bg-brand-cyan/90 !text-ink-950 !border-transparent font-medium">
+              Featured case study
+            </span>
+            <span className="chip">{project.category}</span>
+          </div>
+          <h3 className="mt-5 text-2xl md:text-3xl font-semibold text-white tracking-tight leading-tight">
+            {project.title}
+          </h3>
+          <p className="!text-[15px] mt-4 flex-1">{project.description}</p>
+          <div className="mt-6">
+            <Tags tags={project.tags} />
+          </div>
+          <div className="flex items-center gap-4 mt-6 pt-5 border-t border-white/[0.06] text-sm">
+            <ProjectLinks project={project} />
+          </div>
+        </div>
+      </motion.article>
+    );
+  }
+
+  return (
+    <motion.article
+      ref={ref}
+      {...cardMotion}
+      className="group tile-card tile-card-hover spotlight p-2 flex flex-col transition-transform duration-500 hover:-translate-y-1"
+    >
+      <div className="relative">
+        <BrowserFrame project={project} />
+        {project.featured && (
+          <span className="absolute top-11 right-3 chip !bg-brand-cyan/90 !text-ink-950 !border-transparent font-medium">
+            Featured
+          </span>
+        )}
+      </div>
+
+      <div className="p-5 flex flex-col flex-1">
+        <span className="text-[11px] font-mono uppercase tracking-wider text-brand-cyan/80">
+          {project.category}
+        </span>
+        <h3 className="mt-1.5 text-lg font-semibold text-white leading-snug">{project.title}</h3>
+        <div className="flex-1">
+          <p className="!text-sm mt-2 line-clamp-3">{project.description}</p>
+        </div>
+        <div className="mt-4">
+          <Tags tags={project.tags} max={4} />
+        </div>
+        <div className="flex items-center gap-4 mt-5 pt-4 border-t border-white/[0.06] text-sm">
+          <ProjectLinks project={project} />
+        </div>
+      </div>
+    </motion.article>
+  );
+});
+
+const Portfolio = () => {
+  const [filter, setFilter] = useState("All");
+  const [showAll, setShowAll] = useState(false);
+
+  const filtered = useMemo(
+    () => (filter === "All" ? ordered : ordered.filter((p) => p.category === filter)),
+    [filter],
+  );
+  const visible = showAll ? filtered : filtered.slice(0, INITIAL_COUNT);
+
+  return (
+    <section id="portfolio" className="section">
+      <div className="section-container">
+        <SectionHeading
+          eyebrow="Selected work"
+          title="Projects I've"
+          accent="shipped"
+          description="Client platforms, AI tools and dashboards, several running in production today."
+        />
+        <div
+          className="flex flex-wrap gap-2 -mt-4 mb-10"
+          role="tablist"
+          aria-label="Filter projects"
+        >
+          {filters.map((f) => (
+            <button
+              key={f}
+              role="tab"
+              aria-selected={filter === f}
+              onClick={() => {
+                setFilter(f);
+                setShowAll(false);
+              }}
+              className={`relative rounded-full px-4 py-2 text-sm transition-colors duration-300 cursor-pointer ${
+                filter === f
+                  ? "text-ink-950"
+                  : "text-slate-400 hover:text-white border border-white/10"
               }`}
             >
-              <div className="relative aspect-video overflow-hidden">
-                <img
-                  src={project.img}
-                  alt={project.title}
-                  className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-110"
-                  loading="lazy"
+              {filter === f && (
+                <motion.span
+                  layoutId="filter-pill"
+                  className="absolute inset-0 rounded-full bg-white"
+                  transition={{ type: "spring", bounce: 0.2, duration: 0.5 }}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-ink-950 via-ink-950/20 to-transparent opacity-70 group-hover:opacity-90 transition-opacity duration-500" />
-
-                {project.private ? (
-                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <span className="flex items-center gap-2 px-4 py-2 rounded-full bg-ink-950/90 border border-white/20 text-white text-xs font-mono">
-                      <FiLock size={13} /> Private client project
-                    </span>
-                  </div>
-                ) : (
-                  <div className="absolute inset-0 flex items-center justify-center gap-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <a
-                      href={project.links.site}
-                      target="_blank"
-                      rel="noreferrer"
-                      aria-label={`View ${project.title} live site`}
-                      className="w-11 h-11 rounded-full bg-ink-950/90 border border-white/20 flex items-center justify-center text-white transition-transform duration-300 hover:scale-110 hover:bg-brand-cyan hover:text-ink-950"
-                    >
-                      <FiExternalLink size={18} />
-                    </a>
-                    {project.links.github && (
-                      <a
-                        href={project.links.github}
-                        target="_blank"
-                        rel="noreferrer"
-                        aria-label={`View ${project.title} source on GitHub`}
-                        className="w-11 h-11 rounded-full bg-ink-950/90 border border-white/20 flex items-center justify-center text-white text-xl transition-transform duration-300 hover:scale-110 hover:bg-brand-cyan hover:text-ink-950"
-                      >
-                        <DiGithubBadge />
-                      </a>
-                    )}
-                  </div>
-                )}
-              </div>
-
-              <div className="p-6 flex flex-col flex-1">
-                <div className="flex items-start justify-between gap-2">
-                  <h3 className="text-lg font-display font-semibold text-slate-100 transition-colors duration-300 group-hover:text-brand-cyan">
-                    {project.title}
-                  </h3>
-                  <FiArrowUpRight
-                    size={18}
-                    className="shrink-0 mt-1 text-slate-500 opacity-0 -translate-x-1 translate-y-1 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0 group-hover:text-brand-cyan"
-                  />
-                </div>
-                <p className="!text-sm mt-2 text-slate-400 flex-1">
-                  {project.description}
-                </p>
-                <div className="flex flex-wrap gap-2 mt-4">
-                  {project.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="text-[11px] font-mono px-2.5 py-1 rounded-full bg-white/5 border border-white/10 text-brand-cyan/90"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </motion.article>
+              )}
+              <span className="relative">{f}</span>
+            </button>
           ))}
         </div>
+
+        <motion.div layout className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <AnimatePresence mode="popLayout">
+            {visible.map((project, i) => (
+              <ProjectCard
+                key={project.title}
+                project={project}
+                wide={filter === "All" && i === 0}
+              />
+            ))}
+          </AnimatePresence>
+        </motion.div>
+
+        {filtered.length > INITIAL_COUNT && (
+          <div className="flex justify-center mt-12">
+            <button onClick={() => setShowAll((v) => !v)} className="btn-outline cursor-pointer">
+              {showAll ? "Show less" : `View all ${filtered.length} projects`}
+              <FiChevronDown
+                className={`transition-transform duration-300 ${showAll ? "rotate-180" : ""}`}
+              />
+            </button>
+          </div>
+        )}
       </div>
     </section>
   );

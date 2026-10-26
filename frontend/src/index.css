@@ -8,32 +8,28 @@
   }
 
   body {
-    @apply text-slate-200 font-sans antialiased;
-    background-color: #05060a;
-    background-image: linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
-      linear-gradient(to right, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
-    background-size: 64px 64px;
-    background-attachment: fixed;
-    background-repeat: repeat;
+    @apply text-slate-300 font-sans antialiased;
+    background-color: #07080c;
+    font-feature-settings: "ss01", "cv11";
   }
 
   h1,
   h2,
   h3,
   h4 {
-    @apply font-display;
+    @apply font-display tracking-tight;
   }
 
   h2 {
-    @apply text-2xl md:text-4xl font-bold tracking-tight;
+    @apply text-3xl md:text-5xl font-semibold tracking-[-0.03em] text-transparent bg-clip-text bg-gradient-to-b from-white via-white to-white/55 pb-1;
   }
 
   p {
-    @apply text-base md:text-lg tracking-tight leading-relaxed text-slate-400;
+    @apply text-base leading-relaxed text-slate-400;
   }
 
   ::selection {
-    background: rgba(34, 211, 238, 0.35);
+    background: rgba(94, 234, 212, 0.3);
     color: #fff;
   }
 
@@ -42,23 +38,52 @@
   }
 
   ::-webkit-scrollbar-track {
-    background: #05060a;
+    background: #07080c;
   }
 
   ::-webkit-scrollbar-thumb {
-    background: linear-gradient(180deg, #22d3ee, #8b5cf6);
+    background: #1f2430;
     border-radius: 999px;
-    border: 2px solid #05060a;
+    border: 2px solid #07080c;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #2b3242;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+    }
   }
 }
 
 @layer components {
   .section-container {
-    @apply max-w-[1200px] mx-auto px-6 md:px-10;
+    @apply max-w-[1180px] mx-auto px-5 md:px-8;
+  }
+
+  .section {
+    @apply relative py-24 md:py-32 scroll-mt-20;
+  }
+
+  .section::before {
+    content: "";
+    @apply absolute top-0 left-1/2 -translate-x-1/2 h-px w-[min(1100px,90%)] bg-gradient-to-r from-transparent via-white/10 to-transparent;
   }
 
   .eyebrow {
-    @apply inline-flex items-center gap-2 text-xs md:text-sm font-mono tracking-widest uppercase text-brand-cyan/80;
+    @apply inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 text-xs font-mono tracking-wide text-slate-400;
+  }
+
+  .accent-gradient {
+    @apply text-transparent bg-clip-text bg-gradient-to-r from-brand-cyan via-sky-400 to-brand-violet;
   }
 
   .accent-text {
@@ -66,23 +91,89 @@
   }
 
   .btn-primary {
-    @apply relative inline-flex items-center justify-center gap-2 rounded-xl px-6 py-3 font-semibold text-ink-950 bg-brand-cyan transition-all duration-300 hover:brightness-110 hover:-translate-y-0.5;
+    @apply relative inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-medium text-ink-950 bg-white shadow-[0_0_0_1px_rgba(255,255,255,0.1),0_8px_30px_-8px_rgba(255,255,255,0.35)] transition-all duration-300 hover:bg-slate-100 hover:-translate-y-0.5 hover:shadow-[0_0_0_1px_rgba(255,255,255,0.2),0_12px_40px_-8px_rgba(94,234,212,0.45)];
   }
 
   .btn-outline {
-    @apply inline-flex items-center justify-center gap-2 rounded-xl px-6 py-3 font-semibold text-slate-200 border border-white/15 bg-white/[0.02] transition-all duration-300 hover:border-brand-cyan/40 hover:text-white hover:-translate-y-0.5;
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-medium text-slate-200 border border-white/15 bg-white/[0.03] backdrop-blur transition-all duration-300 hover:border-white/30 hover:bg-white/[0.06] hover:text-white hover:-translate-y-0.5;
+  }
+
+  .btn-cv {
+    @apply relative inline-flex items-center justify-center gap-2.5 rounded-full px-6 py-3 text-sm font-medium text-white transition-all duration-300 hover:-translate-y-0.5;
+    border: 1px solid transparent;
+    background: linear-gradient(#0c0e14, #0c0e14) padding-box,
+      linear-gradient(120deg, #5eead4, #60a5fa 50%, #a78bfa) border-box;
+    box-shadow: 0 0 32px -10px rgba(94, 234, 212, 0.45);
+  }
+
+  .btn-cv:hover {
+    box-shadow: 0 0 44px -8px rgba(94, 234, 212, 0.6);
+  }
+
+  .open-badge {
+    @apply inline-flex items-center gap-3 rounded-full border border-emerald-400/30 bg-emerald-400/[0.08] py-1.5 pl-1.5 pr-4 text-sm text-emerald-100/90 shadow-[0_0_40px_-10px_rgba(52,211,153,0.55)];
   }
 
   .tile-card {
-    @apply bg-white/[0.03] border border-white/10 rounded-2xl;
+    @apply relative rounded-3xl border border-white/[0.08] bg-gradient-to-b from-white/[0.04] to-white/[0.01];
   }
 
-  .card-hover {
-    @apply transition-all duration-500 hover:-translate-y-1.5;
+  .tile-card-hover {
+    @apply transition-all duration-500 hover:border-white/[0.16] hover:from-white/[0.06];
   }
 
-  .dot-grid {
-    background-image: radial-gradient(rgba(255, 255, 255, 0.14) 1px, transparent 1px);
-    background-size: 22px 22px;
+  /* Cursor-following glow + border highlight; --x/--y set by useSpotlight() */
+  .spotlight {
+    isolation: isolate;
+  }
+
+  .spotlight::before,
+  .spotlight::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+
+  .spotlight::before {
+    z-index: -1;
+    background: radial-gradient(
+      520px circle at var(--x, 50%) var(--y, 50%),
+      rgba(94, 234, 212, 0.07),
+      transparent 45%
+    );
+  }
+
+  .spotlight::after {
+    padding: 1px;
+    background: radial-gradient(
+      320px circle at var(--x, 50%) var(--y, 50%),
+      rgba(94, 234, 212, 0.55),
+      rgba(167, 139, 250, 0.25) 35%,
+      transparent 60%
+    );
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+  }
+
+  .spotlight:hover::before,
+  .spotlight:hover::after {
+    opacity: 1;
+  }
+
+  .chip {
+    @apply inline-flex items-center rounded-full border border-white/10 bg-white/[0.03] px-2.5 py-1 text-[11px] font-mono text-slate-400;
+  }
+
+  .mask-fade-x {
+    mask-image: linear-gradient(to right, transparent, #000 12%, #000 88%, transparent);
+  }
+
+  .mask-fade-b {
+    mask-image: linear-gradient(to bottom, #000 40%, transparent);
   }
 }

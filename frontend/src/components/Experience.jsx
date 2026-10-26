@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { FiBriefcase, FiCalendar } from "react-icons/fi";
+import { SectionHeading } from "./ui";
 
 const experience = [
   {
@@ -16,7 +16,7 @@ const experience = [
   },
   {
     role: "MERN/MEAN Stack Developer",
-    company: "Walee Technologies",
+    company: "Techlets Pvt Ltd",
     period: "Jul 2024 – Present",
     points: [
       "Developing and maintaining multiple client-facing web applications.",
@@ -62,86 +62,76 @@ const experience = [
   },
 ];
 
-const itemVariants = {
-  hidden: { opacity: 0, x: -24 },
-  show: { opacity: 1, x: 0, transition: { duration: 0.55, ease: "easeOut" } },
-};
+const initials = (name) =>
+  name
+    .split(/\s+/)
+    .slice(0, 2)
+    .map((w) => w[0])
+    .join("")
+    .toUpperCase();
 
 const Experience = () => {
   return (
-    <section id="experience" className="relative py-24 md:py-32 scroll-mt-24">
+    <section id="experience" className="section">
       <div className="section-container">
-        <motion.div
-          initial={{ opacity: 0, y: 28 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.6 }}
-          className="flex items-start gap-4 max-w-2xl mb-16"
-        >
-          <span className="font-mono text-sm text-brand-cyan/40 pt-1 shrink-0">02</span>
-          <div>
-            <span className="eyebrow">Career so far</span>
-            <h2 className="mt-3 text-slate-100">
-              Work <span className="accent-text">Experience</span>
-            </h2>
-            <p className="!text-base mt-4">
-              From intern to full-stack contractor — here&apos;s where
-              I&apos;ve shipped production code.
-            </p>
-          </div>
-        </motion.div>
+        <SectionHeading
+          eyebrow="Experience"
+          title="Where I've"
+          accent="shipped"
+          description="From intern to full-stack contractor: building products for startups, agencies and direct clients."
+        />
 
-        <div className="relative max-w-3xl mx-auto">
-          <div className="absolute left-[15px] md:left-1/2 top-2 bottom-2 w-px bg-brand-cyan/30 md:-translate-x-1/2" />
-
-          <div className="space-y-10">
-            {experience.map((job, i) => (
-              <motion.div
-                key={`${job.company}-${job.period}`}
-                initial="hidden"
-                whileInView="show"
-                viewport={{ once: true, amount: 0.3 }}
-                variants={itemVariants}
-                transition={{ delay: i * 0.08 }}
-                className="relative pl-10 md:pl-0"
-              >
-                <span className="absolute left-0 md:left-1/2 top-1.5 md:-translate-x-1/2 w-[13px] h-[13px] rounded-full bg-brand-cyan ring-4 ring-ink-950" />
-
-                <motion.div
-                  whileHover={{ x: i % 2 === 0 ? 6 : -6 }}
-                  transition={{ duration: 0.3, ease: "easeOut" }}
-                  className={`md:w-1/2 ${
-                    i % 2 === 0 ? "md:pr-10 md:ml-0" : "md:pl-10 md:ml-auto"
+        <div className="tile-card divide-y divide-white/[0.06] overflow-hidden">
+          {experience.map((job, i) => (
+            <motion.div
+              key={`${job.company}-${job.period}`}
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.5, delay: Math.min(i, 3) * 0.05 }}
+              className="group grid md:grid-cols-12 gap-3 md:gap-8 p-6 md:p-8 transition-colors duration-300 hover:bg-white/[0.02]"
+            >
+              <div className="md:col-span-4 flex items-start gap-4">
+                <span
+                  className={`shrink-0 w-12 h-12 rounded-2xl flex items-center justify-center text-sm font-semibold tracking-tight border transition-transform duration-500 group-hover:scale-105 ${
+                    job.period.endsWith("Present")
+                      ? "border-brand-cyan/30 bg-gradient-to-br from-brand-cyan/25 to-brand-violet/25 text-white shadow-[0_0_30px_-8px_rgba(94,234,212,0.5)]"
+                      : "border-white/10 bg-white/[0.04] text-slate-300"
                   }`}
                 >
-                  <div className="tile-card p-6 hover:border-brand-cyan/30 transition-colors duration-300">
-                    <div className="flex items-center gap-2 text-xs font-mono text-brand-cyan/90 mb-2">
-                      <FiCalendar size={13} />
-                      {job.period}
-                    </div>
-                    <h3 className="font-display font-semibold text-slate-100 text-lg">
-                      {job.role}
-                    </h3>
-                    <div className="flex items-center gap-2 text-sm text-slate-400 mt-1 mb-3">
-                      <FiBriefcase size={14} />
-                      {job.company}
-                    </div>
-                    <ul className="space-y-1.5">
-                      {job.points.map((point) => (
-                        <li
-                          key={point}
-                          className="!text-sm text-slate-400 flex gap-2"
-                        >
-                          <span className="text-brand-cyan mt-1.5 shrink-0">▹</span>
-                          {point}
-                        </li>
-                      ))}
-                    </ul>
+                  {initials(job.company)}
+                </span>
+                <div>
+                  <div className="text-lg font-semibold text-white leading-tight">
+                    {job.company}
                   </div>
-                </motion.div>
-              </motion.div>
-            ))}
-          </div>
+                  <div className="mt-1.5 flex flex-wrap items-center gap-2 font-mono text-xs text-slate-500">
+                    {job.period}
+                    {job.period.endsWith("Present") && (
+                      <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-400/30 bg-emerald-400/10 px-2 py-0.5 text-[10px] font-sans font-medium text-emerald-300">
+                        <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
+                        Current
+                      </span>
+                    )}
+                  </div>
+                </div>
+              </div>
+              <div className="md:col-span-8 md:pl-0 pl-16">
+                <h3 className="text-base font-semibold text-brand-cyan">{job.role}</h3>
+                <ul className="mt-3 space-y-2">
+                  {job.points.map((point) => (
+                    <li
+                      key={point}
+                      className="flex gap-3 text-[15px] leading-relaxed text-slate-400"
+                    >
+                      <span className="mt-2.5 h-1 w-1 shrink-0 rounded-full bg-slate-600" />
+                      {point}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </motion.div>
+          ))}
         </div>
       </div>
     </section>

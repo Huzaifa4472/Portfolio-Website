@@ -4,9 +4,10 @@ import { FiMail, FiArrowUp } from "react-icons/fi";
 import { Link } from "react-scroll";
 
 const links = [
-  { to: "about", label: "About" },
+  { to: "services", label: "Services" },
+  { to: "portfolio", label: "Work" },
   { to: "experience", label: "Experience" },
-  { to: "portfolio", label: "Projects" },
+  { to: "about", label: "About" },
   { to: "contact", label: "Contact" },
 ];
 
@@ -22,27 +23,15 @@ const socials = [
 
 const Footer = () => {
   return (
-    <footer className="relative border-t border-white/5 mt-10">
-      <div className="section-container py-14 flex flex-col md:flex-row items-center md:items-start justify-between gap-10">
-        <div className="text-center md:text-left">
-          <Link
-            to="hero"
-            smooth
-            duration={500}
-            className="inline-flex items-center gap-2 cursor-pointer"
-          >
-            <span className="w-8 h-8 rounded-lg bg-brand-cyan flex items-center justify-center font-display font-bold text-ink-950">
-              H
-            </span>
-            <span className="font-display font-semibold text-lg text-slate-100">
-              Huzaifa
-            </span>
-          </Link>
-          <p className="!text-sm mt-3 max-w-xs text-slate-500">
-            Full-stack developer crafting clean, fast, and thoughtfully
-            designed web experiences.
-          </p>
-          <div className="flex items-center justify-center md:justify-start gap-4 mt-5">
+    <footer className="relative mt-10 border-t border-white/[0.06] overflow-hidden">
+      <div className="section-container pt-14 pb-10">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-8">
+          <div>
+            <div className="text-lg font-semibold text-white tracking-tight">Muhammad Huzaifa</div>
+            <div className="mt-1 text-sm text-slate-500">Full-Stack Developer</div>
+          </div>
+
+          <div className="flex items-center gap-3">
             {socials.map(({ icon: Icon, href, label }) => (
               <a
                 key={label}
@@ -50,43 +39,48 @@ const Footer = () => {
                 target="_blank"
                 rel="noreferrer"
                 aria-label={label}
-                className="w-10 h-10 rounded-lg border border-white/10 flex items-center justify-center text-slate-400 transition-all duration-300 hover:text-white hover:border-brand-cyan/40 hover:-translate-y-0.5"
+                className="w-11 h-11 rounded-full border border-white/10 flex items-center justify-center text-slate-400 transition-all duration-300 hover:text-white hover:border-white/30 hover:-translate-y-0.5"
               >
                 <Icon size={18} />
               </a>
             ))}
+            <Link to="hero" smooth duration={500}>
+              <button
+                aria-label="Back to top"
+                className="w-11 h-11 rounded-full bg-white text-ink-950 flex items-center justify-center transition-transform duration-300 hover:-translate-y-1 cursor-pointer"
+              >
+                <FiArrowUp size={18} />
+              </button>
+            </Link>
           </div>
         </div>
 
-        <nav className="flex gap-8 text-sm text-slate-400">
-          {links.map((link) => (
-            <Link
-              key={link.to}
-              to={link.to}
-              smooth
-              offset={-90}
-              duration={500}
-              className="cursor-pointer transition-colors duration-300 hover:text-white"
-            >
-              {link.label}
-            </Link>
-          ))}
-        </nav>
-
-        <Link to="hero" smooth duration={500} className="cursor-pointer">
-          <button
-            aria-label="Back to top"
-            className="w-11 h-11 rounded-full border border-white/15 flex items-center justify-center text-slate-300 transition-all duration-300 hover:text-ink-950 hover:bg-brand-cyan hover:border-brand-cyan hover:-translate-y-1"
-          >
-            <FiArrowUp size={18} />
-          </button>
-        </Link>
+        <div className="mt-10 pt-8 border-t border-white/[0.06] flex flex-col md:flex-row items-center justify-between gap-6">
+          <nav className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm text-slate-500">
+            {links.map((link) => (
+              <Link
+                key={link.to}
+                to={link.to}
+                smooth
+                offset={-80}
+                duration={500}
+                className="cursor-pointer transition-colors duration-300 hover:text-white"
+              >
+                {link.label}
+              </Link>
+            ))}
+          </nav>
+          <p className="!text-xs !text-slate-600">
+            © {new Date().getFullYear()} Muhammad Huzaifa · Full-Stack Developer
+          </p>
+        </div>
       </div>
 
-      <div className="border-t border-white/5 py-6">
-        <p className="text-center text-xs text-slate-600">
-          © {new Date().getFullYear()} Muhammad Huzaifa. All rights reserved.
-        </p>
+      <div
+        aria-hidden
+        className="pointer-events-none select-none text-center font-semibold tracking-[-0.06em] leading-none text-[18vw] text-transparent bg-clip-text bg-gradient-to-b from-white/[0.07] to-transparent -mb-[4vw]"
+      >
+        HUZAIFA
       </div>
     </footer>
   );
